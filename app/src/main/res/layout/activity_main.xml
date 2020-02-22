@@ -51,6 +51,13 @@
                 android:ems="11"
                 android:inputType="number"
                 android:text="" />
+
+            <Button
+                android:id="@+id/sendBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Button" />
         </LinearLayout>
     </FrameLayout>
 
