@@ -1,31 +1,53 @@
 package com.shindorim.bbibbi;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FragmentManager fragmentManager;
+    private receive fragmentReceive;
+    private  send fragmentSend;
+    private  setting fragmentSetting;
+    private  dictionary fragmentDictionary;
+    private FragmentTransaction transaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button sendBtn = findViewById(R.id.sendBtn);
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(),"안녕", Toast.LENGTH_LONG).show();
+        fragmentManager = getSupportFragmentManager();
 
-                Intent intent = new Intent(MainActivity.this, dictionary.class);
-                startActivity(intent);
-            }
-        });
+        fragmentReceive = new receive();
+        fragmentSend = new send();
+        fragmentDictionary = new dictionary();
+        fragmentSetting = new setting();
+
+        transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frameLayout, fragmentSend).commitAllowingStateLoss();
+    }
+
+    public void clickHandler(View view) {
+        transaction = fragmentManager.beginTransaction();
+
+        switch (view.getId()) {
+            case R.id.btnReceive:
+                transaction.replace(R.id.frameLayout, fragmentReceive).commitAllowingStateLoss();
+                break;
+            case R.id.btnSend:
+                transaction.replace(R.id.frameLayout, fragmentSend).commitAllowingStateLoss();
+                break;
+            case R.id.btnDictionary:
+                transaction.replace(R.id.frameLayout, fragmentDictionary).commitAllowingStateLoss();
+                break;
+            case R.id.btnSetting:
+                transaction.replace(R.id.frameLayout, fragmentSetting).commitAllowingStateLoss();
+        }
     }
 }
